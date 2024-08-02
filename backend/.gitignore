@@ -1,0 +1,32 @@
+# Root .gitignore
+
+# Common ignore patterns
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Node.js
+/node_modules/
+/.npmrc
+/yarn.lock
+
+# Vue.js
+/dist/
+/build/
+/.vuepress/
+
+# Environment variables
+.env*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor configurations
+.idea/
+.vscode/
+
+# Additional ignore patterns for the Vue.js app
+# Place these patterns below the general rules
+/vue-app/.gitignore
