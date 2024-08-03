@@ -1,14 +1,14 @@
-    import jwt from "jsonwebtoken"
-    import bcrypt from "bcrypt"
-    import User from "../models/User.js" 
-    import { Op } from "sequelize"
-    // For body validation
-    import { UserSchema } from "../schemas/UserSchema.js"
-    import zod from "zod"
+import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
+import User from "../models/User.js" 
+import { Op } from "sequelize"
+// For body validation
+import { UserSchema } from "../schemas/UserSchema.js"
+import zod from "zod"
 
-    // Load the .env variable
-    import dotenv from 'dotenv';
-    dotenv.config();
+// Load the .env variable
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 class UserController {

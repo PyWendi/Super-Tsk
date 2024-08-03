@@ -127,11 +127,11 @@ export const getUser = async (id) => {
 
 
 /**
- * Action performed by all authenticated user 
+ * Action performed by Administrator 
  * Get a user information
  * 
  * @param {*} name : string 
- * @returns {message: string, data: null | [user instance], res: true}
+ * @returns {message: string, data: null | [user instance], res: boolean}
  */
 export const getUsersByName = async (name) => {
     let res = {

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { register, login, getUser, getUsersByName } from "src/requests/userRequest";
 import { reactive, ref } from "vue";
+import { tokenManagement } from "./tokenManagement";
 
 export const useUserStore = defineStore("user", () => {
     /**
@@ -53,15 +54,18 @@ export const useUserStore = defineStore("user", () => {
 
     const getUserByNameAction = async (name) => {
         const response = await getUsersByName(name)
-        return repsonse
+        return response
     }
 
+    const logoutUser = () => {
+        return (tokenManagement.deleteJwt()) ? true : false
+    }
 
     return {
         // Global state
         userData, userDetail, userList,
 
         //Function
-        logUser, registerUser, getUserAction, getUserByNameAction
+        logUser, registerUser, getUserAction, getUserByNameAction, logoutUser
     }
 })

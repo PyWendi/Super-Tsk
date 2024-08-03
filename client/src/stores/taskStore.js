@@ -61,14 +61,8 @@ export const useUserStore = defineStore("user", () => {
     const deleteTaskAction = async (taskId, index) => {
         const response = deleteTask(taskId)
         if(response.res) {
-            let newTasks = []
-            taskList.value.forEach((task, i) => {
-                if(i != index) {
-                    newTasks.push(task)
-                }
-            });
-
-            taskDetail.value = [...newTasks]
+            let newTasks = taskList.value.filter((task, i) => i != index)
+            taskList.value = [...newTasks]
         }
 
         return response

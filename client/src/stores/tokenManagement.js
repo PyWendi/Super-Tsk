@@ -24,7 +24,7 @@ export const tokenManagement = {
 	getJwt: () => {
 		try {
 			const token = Cookies.get("token");
-			return token ? token : null;
+			return (token != null) ? token : null;
 		} catch (error) {
 			console.log(error);
 			return null;
