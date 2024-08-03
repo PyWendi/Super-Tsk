@@ -97,12 +97,12 @@ class UserController {
             // Look for the user z=with the email provided
             const user = await User.findOne({ where: { email } });
             if (!user) {
-                return res.status(404).json({ message: 'User not found, please verify your credential' });
+                return res.status(404).json({ message: 'User not found, please verify your email.' });
             }
 
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Mot de passe incorrect' });
+                return res.status(401).json({ message: 'Password incorrect.' });
             }
 
             // Generate a token with the current authenticated user
@@ -112,7 +112,7 @@ class UserController {
                     isAdmin: user.isAdmin 
                 }, 
                 process.env.SECRET, 
-                { expiresIn: '1h' });
+                { expiresIn: '2h' });
 
             res.json({ user, token });
         } catch (error) {
@@ -150,7 +150,7 @@ class UserController {
             if (user){
                 res.json(user)
             } else {
-                res.status(404).json({message: "Aucun utilisateur non trouvé."})
+                res.status(404).json({message: "There's no user found."})
             }
             
         } catch (error) {
@@ -190,7 +190,7 @@ class UserController {
             if (users){
                 res.json(users)
             } else {
-                res.status(404).json({message: "Aucun utilisateur non trouvé."})
+                res.status(404).json({message: "No result found."})
             }
             
         } catch (error) {

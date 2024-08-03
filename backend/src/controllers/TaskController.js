@@ -92,7 +92,7 @@ class TaskController {
         } catch (error) {
             console.log("An error is catch in createTask Controller : ", error)
             if(error instanceof zod.ZodError) return res.status(400).json({
-                message: "Please, verify the that all requested information or not blanks",
+                message: "Please, verify that all requested information or not blanks",
                 error: error.errors
             })
 
@@ -124,11 +124,11 @@ class TaskController {
 
             let task = await Task.update(
                 {
-                    name, description, status
+                    name, description, status, updated_at: new Date()
                 },
                 {where : {id: taskId,}}
             ) 
-            console.log(task[0])
+
             return res.json({task:task})
         } catch (error) {
             console.log("An error has been captured inside updateTask controller : ", error)
@@ -151,12 +151,11 @@ class TaskController {
         try {
             const {
                 status,
+                taskId
             } = req.body
 
-            const {taskId} = req.params
-
             let task = await Task.update(
-                {status}, {where : {id: taskId,}}
+                {status, updated_at: new Date()}, {where : {id: taskId,}}
             ) 
 
             return res.json({task:task})

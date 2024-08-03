@@ -7,5 +7,3 @@ export const TaskSchema = object({
     status: string(),
     owner: number,
 })
-// created_at: date(), not required because set inside a controller
-// updated_at: date(), not required because set inside a controller

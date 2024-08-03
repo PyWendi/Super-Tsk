@@ -1,7 +1,7 @@
 import express from 'express';
 import UserController from '../controllers/UserController.js';
-import jwtMiddleware from '../middlewares/jwtMiddleware.js';
 import adminFilter from '../middlewares/adminFilter.js';
+import jwtMiddleware from '../middlewares/jwtMiddleware.js';
 
 const router = express.Router();
 
