@@ -1,4 +1,4 @@
-import { object, string, date, number } from "zod"
+import { object, string, number } from "zod"
 
 export const TaskSchema = object({
     id: number(),
@@ -6,6 +6,6 @@ export const TaskSchema = object({
     description: string(),
     status: string(),
     owner: number,
-    created_at: date(),
-    updated_at: date(),
 })
+// created_at: date(), not required because set inside a controller
+// updated_at: date(), not required because set inside a controller

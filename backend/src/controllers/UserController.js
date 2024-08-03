@@ -1,13 +1,14 @@
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
-import User from "../models/User.js" 
-import { UserSchema } from "../schemas/UserSchema.js"
-import zod from "zod"
-import { Op } from "sequelize"
+    import jwt from "jsonwebtoken"
+    import bcrypt from "bcrypt"
+    import User from "../models/User.js" 
+    import { Op } from "sequelize"
+    // For body validation
+    import { UserSchema } from "../schemas/UserSchema.js"
+    import zod from "zod"
 
-// Load the .env variable
-import dotenv from 'dotenv';
-dotenv.config();
+    // Load the .env variable
+    import dotenv from 'dotenv';
+    dotenv.config();
 
 
 class UserController {
@@ -24,8 +25,13 @@ class UserController {
      */
     static async register(req, res) {
         try {
-            const { name, lastname, email, password, isAdmin } = UserSchema.parse(req.body)
-            console.log(req.body)
+            const { 
+                name, 
+                lastname, 
+                email, 
+                password, 
+                isAdmin 
+            } = UserSchema.parse(req.body)
             
             // Check if there is an existing user with the given email
             const existingUser = await User.findOne({ where: { email } });
@@ -36,9 +42,21 @@ class UserController {
             // Crypt the password to be unrecognizable
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const newUser = await User.create({ name, lastname, email, password: hashedPassword, isAdmin:((isAdmin)?isAdmin:false) });
+            const newUser = await User.create({ 
+                name, 
+                lastname, 
+                email, 
+                password: hashedPassword, 
+                isAdmin:((isAdmin)?isAdmin:false) 
+            });
 
-            const token = jwt.sign({ userId: newUser.id, isAdmin: newUser.isAdmin }, process.env.SECRET, { expiresIn: '2h' });
+            const token = jwt.sign(
+                { 
+                    userId: newUser.id, 
+                    isAdmin: newUser.isAdmin 
+                }, 
+                process.env.SECRET, 
+                { expiresIn: '2h' });
 
             return res.status(201).json({ user: newUser, token });
         } 
@@ -88,7 +106,13 @@ class UserController {
             }
 
             // Generate a token with the current authenticated user
-            const token = jwt.sign({ userId: user.id, isAdmin: user.isAdmin }, process.env.SECRET, { expiresIn: '1h' });
+            const token = jwt.sign(
+                { 
+                    userId: user.id, 
+                    isAdmin: user.isAdmin 
+                }, 
+                process.env.SECRET, 
+                { expiresIn: '1h' });
 
             res.json({ user, token });
         } catch (error) {

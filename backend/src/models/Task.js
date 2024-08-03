@@ -38,7 +38,8 @@ Task.init({
 },
 {
     sequelize: db,
-    tableName: "task",   
+    tableName: "task",  
+    timestamps: false 
 })
 
 

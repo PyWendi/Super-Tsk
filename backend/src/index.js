@@ -9,6 +9,7 @@ dotenv.config();
 
 // Import routes
 import userRoute from "./routes/UserRoute.js"
+import taskRoute from "./routes/TaskRoute.js"
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use(express.json());
 const routePrefix = "/api"
 
 app.use(routePrefix, userRoute)
+app.use(routePrefix, taskRoute)
 
 
 const startServer = async () => {
