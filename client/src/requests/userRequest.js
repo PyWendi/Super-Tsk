@@ -31,7 +31,7 @@ export const register = async (body) => {
         } else if (response.status === 400) {
             res.message = response.data.message
             return res
-        }
+        } else return res
 
 
     } catch (error) {
@@ -133,7 +133,7 @@ export const getUser = async (id) => {
  * @param {*} name : string 
  * @returns {message: string, data: null | [user instance], res: true}
  */
-export const getUserByname = async (name) => {
+export const getUsersByName = async (name) => {
     let res = {
         message: "",
         data: null,
