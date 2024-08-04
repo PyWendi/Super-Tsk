@@ -1,17 +1,31 @@
 <template>
-    <div class=" full-width bg-white q-px-xl q-py-lg">
+    <div 
+    style="width: 100%;"
+    class="">
         <!-- Head -->
-         <div class="row justify-between items-center">
+        <div class="row bg-white justify-around items-center q-px-xl q-py-xs">
             <!-- Count of all user -->
             <div class="text-h6 text-grey-7">
-                Count of all users : <span>{{store.userList.length}}</span>
+                <DonutChart status="pending" value="20"/>
             </div>
 
-            <!-- Search user -->
-            <div style="width: 350px;">
-                <SearchComponent/>
+            <div class="text-h6 text-grey-7">
+                <DonutChart status="working" value="50"/>
             </div>
-         </div>
+
+            <div class="text-h6 text-grey-7">
+                <DonutChart status="completed" value="30"/>
+            </div>
+
+        </div>
+
+        <!-- Body -->
+        <div class="window-height q-px-xl q-py-xs">
+            <!-- user list -->
+            <TaskList/>
+        </div>
+
+
     </div>
 </template>
 
@@ -24,7 +38,8 @@ defineOptions({
 
 import { ref, onBeforeMount } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
-import SearchComponent from 'src/components/pieces/SearchComponent.vue';
+import DonutChart from 'src/components/pieces/DonutChart.vue';
+import TaskList from 'src/components/task/TaskList.vue';
 
 
 const store = useUserStore()
@@ -39,5 +54,8 @@ onBeforeMount(() => {
 
 
 <style>
+.custom-height {
+    height: 80vh;
+}
 
 </style>

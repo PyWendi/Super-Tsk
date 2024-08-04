@@ -4,18 +4,18 @@
         <!-- User information -->
         <div class="q-mb-lg q-pb-md bordered">
             <!-- Avatar -->
-             <div class="row justify-center">
-                <q-avatar size="50px" font-size="30px" color="grey" text-color="white" icon="group" />
+             <div class="row justify-center q-mb-sm">
+                <q-avatar size="50px" font-size="40px" color="grey" text-color="white" icon="person" />
              </div>
 
             <!-- name -->
-             <div class="q-px-sm q-pt-sm text-center">
-                <div class="q-mb-sm text-h6">
+             <div class="q-px-sm q-pt-sm text-center text-grey-8">
+                <div class="q-mb-sm useComfortaa">
                     {{ store.userData.name }}   
                 </div>
                  
                 <!-- lastname -->
-                <div class="text-h6">
+                <div class="useComfortaa">
                     {{ store.userData.lastname }}
                 </div>
              </div>

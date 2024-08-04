@@ -16,8 +16,19 @@
             bordered>
                 <AdminNavigation/>
             </q-drawer>
+
+            <q-drawer 
+            width="400"
+            class="bg-white q-px-none"
+            show-if-above 
+            v-model="leftDrawerOpen" 
+            side="right" 
+            behavior="desktop" 
+            bordered>
+                <UserDrawer/>
+            </q-drawer>
         
-            <q-page-container class="bg-grey-3 low-front window-height">
+            <q-page-container class="bg-grey-3 low-front max-height">
                 <router-view />
             </q-page-container>
         
@@ -38,6 +49,7 @@ import AdminHeader from 'src/components/headers/AdminHeader.vue';
 import AdminNavigation from 'src/components/drawer/AdminNavigation.vue';
 import { useQuasar, QSpinnerIos } from 'quasar';
 import { ref } from 'vue';
+import UserDrawer from 'src/components/drawer/UserDrawer.vue';
 
 /**
  * All constant functions and hoks

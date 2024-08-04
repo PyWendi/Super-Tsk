@@ -5,6 +5,7 @@
         outlined 
         bottom-slots 
         v-model="text" 
+        color="cyan-8"
         dense
         label="Search users by their name" 
         maxlength="30">
