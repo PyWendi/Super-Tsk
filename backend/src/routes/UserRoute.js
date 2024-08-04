@@ -9,6 +9,10 @@ router.post('/register', UserController.register);
 
 router.post('/login', UserController.login);
 
+router.get('/user/get/current', jwtMiddleware, UserController.getCurrent);
+
+router.get('/user/get/all', adminFilter, UserController.getAllUser);
+
 router.get('/user/get/:id', jwtMiddleware, UserController.getUser);
 
 router.get('/user/get/by_name/:name', adminFilter, UserController.getUserByName);

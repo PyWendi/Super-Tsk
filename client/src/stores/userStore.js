@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { register, login, getUser, getUsersByName } from "src/requests/userRequest";
+import { register, login, getUser, getUsersByName, getAllUser, getCurrentUser } from "src/requests/userRequest";
 import { reactive, ref } from "vue";
 import { tokenManagement } from "./tokenManagement";
 
@@ -9,10 +9,11 @@ export const useUserStore = defineStore("user", () => {
      */
     // data of the current user
     const userData = reactive({
+        id: 0,
         name: "",
         lastname: "",
         email: "",
-        isAdmin: false
+        isAdmin: false,
     })
 
     // Data of a single user
@@ -46,9 +47,30 @@ export const useUserStore = defineStore("user", () => {
         return response
     }
 
+    const getAllUserAction = async () => {
+        const response = await getAllUser()
+        console.log(response)
+        userList.value = response.data.rows
+        return response
+    }
+
+    const getCurrentUserAction = async (id) => {
+        const response = await getCurrentUser(id)
+        let data = response.data
+        console.log(data)
+        userData.id = data.id
+        userData.name = data.name
+        userData.lastname = data.lastname
+        userData.email = data.email
+        userData.isAdmin = data.isAdmin
+        console.log("get user data" ,userData.value)
+        return response
+    }
+
     const getUserAction = async (id) => {
         const response = await getUser(id)
-        userDetail.value = response.data
+        userDetail = response.data
+        console.log("get user data" ,userDetail.value)
         return response
     }
 
@@ -66,6 +88,6 @@ export const useUserStore = defineStore("user", () => {
         userData, userDetail, userList,
 
         //Function
-        logUser, registerUser, getUserAction, getUserByNameAction, logoutUser
+        logUser, registerUser, getAllUserAction, getCurrentUserAction, getUserAction, getUserByNameAction, logoutUser
     }
 })

@@ -124,7 +124,71 @@ class UserController {
         }
     }
 
+    
+    /**
+     * GETALLUSER
+     * 
+     * @param {*} req 
+     * @param {*} res
+     * @return status(200) + user instance + user count
+     * 
+     * in case of error
+     * @return status(404) No user found with the id
+     * @return status(500) something bad went wrong
+     */
+    static async getAllUser(req, res) {
+    
+        try {
+            // Look for the user with the given Id
+            const user = await User.findAndCountAll({
+                where:{isAdmin:false}
+            })
+        
+            if (user){
+                res.json(user)
+            } else {
+                res.status(404).json({message: "There's no user found."})
+            }
+            
+        } catch (error) {
+            console.log("Error captured in getUser controller :", error)
+            res.status(500).json({ message: error.message });
+        } 
+    }
 
+
+    /**
+     * GETCURRENTUSER
+     * 
+     * @param {*} req 
+     * @param {*} res
+     * @return status(200) + user instance
+     * 
+     * in case of error
+     * @return status(404) No user found with the id
+     * @return status(500) something bad went wrong
+     */
+    static async getCurrent(req, res) {
+        try {
+            // Look for the user with the given Id
+            const user = await User.findOne({
+                where:{id:req.userId}
+            })
+        
+            if (user){
+                res.json(user)
+            } else {
+                res.status(404).json({message: "There's no user found."})
+            }
+            
+        } catch (error) {
+            console.log("Error captured in getUser controller :", error)
+            res.status(500).json({ message: error.message });
+        } 
+    }
+    
+    
+    
 
 
     /**
@@ -158,8 +222,6 @@ class UserController {
             res.status(500).json({ message: error.message });
         } 
     }
-
-
 
     
     /**

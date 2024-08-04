@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="centerized">
+        <!-- Should be centerized -->
+        <div >
             <q-card
             flat
             class="column justify-between items-center ">

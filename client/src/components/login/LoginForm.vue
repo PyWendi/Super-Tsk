@@ -107,7 +107,7 @@ function sendPositive(text) {
         color: 'white',
         textColor: 'black',
         icon: 'cloud_done',
-        iconColor: 'indigo-9',
+        iconColor: 'cyan-9',
         message: text,
         position:'bottom',
     })

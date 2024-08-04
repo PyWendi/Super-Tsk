@@ -2,35 +2,27 @@
     <div>
         <q-layout view="hHh LpR lFr">
 
-            <q-header bordered class="bg-cyan-10 text-indigo-2 q-pa-lg row justify-between items-center">
-                <!-- <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" /> -->
-                <LogoHeaderComponent />
-                
-                <q-btn 
-                @click="openLogout=true"
-                flat 
-                bordered 
-                color="white text-h5">
-                    <div>Logout</div>
-                    <q-icon right size="1.2em" style="font-weight: 400;" name="logout" />
-                </q-btn>
+            <q-header bordered class="bg-grey-3 ">
+                <AdminHeader />
             </q-header>
         
-            <q-drawer show-if-above v-model="leftDrawerOpen" side="left" behavior="desktop" bordered>
-              <!-- drawer content -->
+            <q-drawer 
+            width="175"
+            class="bg-white"
+            show-if-above 
+            v-model="leftDrawerOpen" 
+            side="left" 
+            behavior="desktop" 
+            bordered>
+                <AdminNavigation/>
             </q-drawer>
         
-            <q-page-container>
+            <q-page-container class="bg-grey-3 low-front window-height">
                 <router-view />
             </q-page-container>
         
         </q-layout>
 
-        <!-- Dialog Section -->
-        <ConfirmDialog 
-        @callback="confirmLogout" 
-        text="Are you sure you want to logout ?" 
-        :open="openLogout"/>
     </div>
 </template>
 
@@ -42,9 +34,9 @@ import { useUserStore } from 'src/stores/userStore';
 import { checkUserAuth } from 'src/utils/checkUserAuth';
 import { useRouter } from 'vue-router';
 import { decodedToken } from 'src/stores/tokenManagement';
-import LogoHeaderComponent from 'src/components/pieces/LogoHeaderComponent.vue';
+import AdminHeader from 'src/components/headers/AdminHeader.vue';
+import AdminNavigation from 'src/components/drawer/AdminNavigation.vue';
 import { useQuasar, QSpinnerIos } from 'quasar';
-import ConfirmDialog from 'src/components/dialogs/ConfirmDialog.vue';
 import { ref } from 'vue';
 
 /**
@@ -57,7 +49,7 @@ const $q = useQuasar()
 /**
  * All Reactive Variables
  */
-const openLogout = ref(false)
+
 
 
 /**
@@ -74,7 +66,7 @@ const authCheck = async () => {
     if(checkUserAuth()){
         const decoded = await decodedToken()
         // Set user information
-        await userStore.getUserAction(decoded.userId)
+        await userStore.getCurrentUserAction(decoded.userId)
         if(!decoded.isAdmin){
             // Redirect the user according to his role
             router.push({name: "home"})
@@ -84,30 +76,22 @@ const authCheck = async () => {
     }
 }
 
-const confirmLogout = async (confirmed) => {
-    openLogout.value = false
-    $q.loading.show({
-        spinner: QSpinnerIos,
-        spinnerColor: "cyan",
-        message: "Logout processing, please wait...",
-        messageColor: "white"
-    })
-
-    if(confirmed){
-        if(userStore.logoutUser()) {
-            $q.loading.hide  
-            router.push("/")
-        }
-    
-        $q.loading.hide()
-    }
-    $q.loading.hide()
-}
 
 </script>
 
 
 
 <style>
+.max-height {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
 
+.front {
+    z-index: 100;
+}
+.low-front{
+    z-index: 10;
+}
 </style>

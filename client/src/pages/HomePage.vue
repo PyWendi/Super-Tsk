@@ -38,7 +38,7 @@ const authCheck = async () => {
     if(checkUserAuth()){
         const decoded = await decodedToken()
         // Set user information
-        await userStore.getUserAction(decoded.userId)
+        await userStore.getCurrentUserAction(decoded.userId)
         if(decoded.isAdmin){
             // Redirect the user according to his role
             router.push({name: "user_management"})

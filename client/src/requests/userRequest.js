@@ -87,6 +87,83 @@ export const login = async (body) => {
 }
 
 
+
+/**
+ * Action performed by all authenticated user 
+ * Get a user information
+ * 
+ * @param {*} id : number
+ * @returns {message: string, data: null | user instance, res: true}
+ */
+export const getAllUser = async () => {
+    let res = {
+        message: "",
+        data: null,
+        count: 0,
+        res: true
+    }
+
+    try {
+        const response = await api.get(`user/get/all`)
+        console.log("Response inside Get all user request", response)
+
+        // If the user has been found
+        if (response.status === 200) {
+            res.data = response.data
+            res.res = true
+            return res
+        }
+
+
+    } catch (error) {
+        console.error("Error captured inside getUser request : ", error)
+        res.message = "An error occured, Please verify your network conectivity."
+        return res
+    }
+}
+
+
+/**
+ * Action performed by all authenticated user 
+ * Get a user information
+ * 
+ * @param {*} id : number
+ * @returns {message: string, data: null | user instance, res: true}
+ */
+export const getCurrentUser = async () => {
+    let res = {
+        message: "",
+        data: null,
+        res: true
+    }
+
+    try {
+        const response = await api.get(`user/get/current`)
+        console.log("Response inside user get current", response)
+
+        // If the user has been found
+        if (response.status === 200) {
+            res.data = response.data
+            res.res = true
+            return res
+
+            // If there's no user found
+        } else if (response.status === 404) {
+            res.message = response.data.message
+            return res
+        }
+
+
+    } catch (error) {
+        console.error("Error captured inside getUser request : ", error)
+        res.message = "An error occured, Please verify your network conectivity."
+        return res
+    }
+}
+
+
+
+
 /**
  * Action performed by all authenticated user 
  * Get a user information
