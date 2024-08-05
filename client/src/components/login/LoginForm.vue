@@ -89,6 +89,7 @@ import { useRouter } from 'vue-router';
 import { emailValidatorRule } from 'src/utils/emailValidation';
 import { decodedToken } from 'src/stores/tokenManagement';
 import LogoComponent from 'src/components/pieces/LogoComponent.vue';
+import { loginSuccess, loginWarning, loginError } from 'src/utils/customNotification';
 
 defineOptions({
     name: "LoginForm",
@@ -102,32 +103,6 @@ const isPass = ref(true)
 const email = ref(null)
 const password = ref(null)
 
-function sendPositive(text) {
-    $q.notify({
-        color: 'white',
-        textColor: 'black',
-        icon: 'cloud_done',
-        iconColor: 'cyan-9',
-        message: text,
-        position:'bottom',
-    })
-}
-function sendWarning(text) {
-    $q.notify({
-        color: 'orange-4',
-        textColor: 'white',
-        icon: 'warning',
-        message: text
-    })
-}
-function sendNegative(text) {
-    $q.notify({
-        color: 'red-5',
-        textColor: 'white',
-        icon: 'error',
-        message: text
-    })
-}
 
 function reset() {
     email.value = null
@@ -148,18 +123,19 @@ async function validate() {
         const logResponse = await store.logUser(loginData)
 
         if (logResponse.res) {
-            sendPositive("You are signin successfully, you will be redirected...")
+            loginSuccess("You are signin successfully, you will be redirected...")
             const decoded = await decodedToken()
             setTimeout(() => {
                 (decoded.isAdmin) ? router.push({name: "user_management"}) : router.push({name: "home"})
             },2000)
         } else {
             console.log(logResponse)
-            sendWarning(logResponse.message)
+            loginWarning(logResponse.message)
             reset()
         }
     } catch (error) {
-        sendNegative('Une erreur est survenue')
+        console.log(error)
+        loginError('An error occured, please try again and check your network connectivity.')
     }
 }
 </script>

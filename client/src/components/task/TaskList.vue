@@ -67,7 +67,25 @@
 
             <div class="q-pt-md full-width row justify-between items-baseline">
 
-                <div class="q-pt-md column justify-between custom-card-width">
+                <q-scroll-area 
+                :thumb-style="{
+                    right: '4px',
+                    borderRadius: '5px',
+                    backgroundColor: '#0E7490',
+                    width: '5px',
+                    opacity: 0.75
+                }"
+                :bar-style="{
+                    right: '2px',
+                    borderRadius: '9px',
+                    backgroundColor: '#0E7490',
+                    width: '9px',
+                    opacity: 0.2
+                }"
+                
+                style="height: 65vh; "
+                class="q-pt-md  column justify-between custom-card-width"
+                >
                     <TaskCard 
                     name="Firt Task"
                     description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
@@ -75,13 +93,31 @@
                     index="0"
                     status="pending" 
                     class="full-width q-mb-md" />
-                </div>
+                </q-scroll-area>
 
 
-                <div class="q-pt-md f column justify-between custom-card-width">
+                <q-scroll-area 
+                :thumb-style="{
+                    right: '4px',
+                    borderRadius: '5px',
+                    backgroundColor: '#0E7490',
+                    width: '5px',
+                    opacity: 0.75
+                }"
+                :bar-style="{
+                    right: '2px',
+                    borderRadius: '9px',
+                    backgroundColor: '#0E7490',
+                    width: '9px',
+                    opacity: 0.2
+                }"
+                
+                style="height: 65vh; "
+                class="q-pt-md  column justify-between custom-card-width"
+                >
                     <TaskCard 
                     name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
+                    description="Lorem ipsum dolor sit amet consectetur "
                     id="0"
                     index="0"
                     status="working" 
@@ -105,15 +141,49 @@
 
                     <TaskCard 
                     name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
+                    description="Lorem ipsum dolor sit amet consectetur "
                     id="0"
                     index="0"
                     status="working" 
                     class="full-width q-mb-md" />
-                </div>
+
+                    <TaskCard 
+                    name="Second Task"
+                    description="Lorem ipsum dolor sit amet consectetur "
+                    id="0"
+                    index="0"
+                    status="working" 
+                    class="full-width q-mb-md" />
+
+                    <TaskCard 
+                    name="Second Task"
+                    description="Lorem ipsum dolor sit amet consectetur "
+                    id="0"
+                    index="0"
+                    status="working" 
+                    class="full-width q-mb-md" />
+                </q-scroll-area>
 
 
-                <div class="q-pt-md  column justify-between custom-card-width">
+                <q-scroll-area 
+                :thumb-style="{
+                    right: '4px',
+                    borderRadius: '5px',
+                    backgroundColor: '#0E7490',
+                    width: '5px',
+                    opacity: 0.75
+                }"
+                :bar-style="{
+                    right: '2px',
+                    borderRadius: '9px',
+                    backgroundColor: '#0E7490',
+                    width: '9px',
+                    opacity: 0.2
+                }"
+                
+                style="height: 65vh; "
+                class="q-pt-md  column justify-between custom-card-width"
+                >
                     <TaskCard 
                     name="Third Task"
                     description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
@@ -129,7 +199,7 @@
                     index="0"
                     status="completed" 
                     class="full-width q-mb-md" />
-                </div>
+                </q-scroll-area>
 
 
             </div>
@@ -155,5 +225,7 @@ defineOptions({
 }
 .custom-card-width{
     width: 32%;
+    text-wrap: pretty;
+    line-break: normal;
 }
 </style>

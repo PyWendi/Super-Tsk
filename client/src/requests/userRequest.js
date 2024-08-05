@@ -21,10 +21,10 @@ export const register = async (body) => {
         // If the user has been registered
         if (response.status === 201) {
             // Set the token
-            tokenManagement.setJwt(response.data.token)
+            // tokenManagement.setJwt(response.data.token)
             // Set the user data to be used in front
             res.data = response.data.user
-            res = true
+            res.res = true
             return res
 
             // If there's an error with the input
@@ -36,7 +36,7 @@ export const register = async (body) => {
 
     } catch (error) {
         console.error("Error inside register request: ", error)
-        res.message = "An error occured please try again."
+        res.message = error.response.data
         return res
     }
 }
@@ -139,7 +139,6 @@ export const getCurrentUser = async () => {
 
     try {
         const response = await api.get(`user/get/current`)
-        console.log("Response inside user get current", response)
 
         // If the user has been found
         if (response.status === 200) {
@@ -203,6 +202,46 @@ export const getUser = async (id) => {
 }
 
 
+
+/**
+ * Action performed by Administrators only 
+ * Update a user information (name, lastname, isAdmin)
+ * 
+ * @param {*} id : number
+ * @returns {message: string, data: null | user instance, res: true}
+ */
+export const updateUser = async (id, body) => {
+    let res = {
+        message: "",
+        data: null,
+        res: true
+    }
+
+    try {
+        const response = await api.put(`user/update/${id}`, body)
+        console.log("Response inside user update", response)
+
+        // If the user has been found
+        if (response.status === 200) {
+            res.data = response.data
+            res.res = true
+            return res
+
+            // If there's no user found
+        } else if (response.status === 404) {
+            res.message = response.data.message
+            return res
+        }
+
+
+    } catch (error) {
+        console.error("Error captured inside getUser request : ", error)
+        res.message = "An error occured, Please verify your network conectivity."
+        return res
+    }
+}
+
+
 /**
  * Action performed by Administrator 
  * Get a user information
@@ -216,7 +255,6 @@ export const getUsersByName = async (name) => {
         data: null,
         res: true
     }
-
     try {
         const response = await api.get(`user/get/by_name/${name}`)
         console.log("Response inside user get", response)

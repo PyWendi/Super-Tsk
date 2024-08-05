@@ -15,7 +15,9 @@ router.get('/user/get/all', adminFilter, UserController.getAllUser);
 
 router.get('/user/get/:id', jwtMiddleware, UserController.getUser);
 
-router.get('/user/get/by_name/:name', adminFilter, UserController.getUserByName);
+router.put('/user/update/:id', adminFilter, UserController.updateUser);
+
+router.get('/user/get/by_name/:userName', adminFilter, UserController.getUserByName);
 
 
 export default router;

@@ -140,9 +140,7 @@ class UserController {
     
         try {
             // Look for the user with the given Id
-            const user = await User.findAndCountAll({
-                where:{isAdmin:false}
-            })
+            const user = await User.findAndCountAll()
         
             if (user){
                 res.json(user)
@@ -223,6 +221,39 @@ class UserController {
         } 
     }
 
+
+
+    /**
+     * UPDATEUSER
+     * 
+     * @param {*} req 
+     * @param {*} res
+     * @return status(200) + user instance
+     * 
+     * in case of error
+     * @return status(404) No user found with the id
+     * @return status(500) something bad went wrong
+     */
+    static async updateUser(req, res) {
+        const { id } = req.params;
+        const { name, lastname, isAdmin } = req.body
+    
+        try {
+            // Look for the user with the given Id
+            const user = await User.update({name, lastname, isAdmin},
+            {
+                where:{id:id}
+            })
+        
+            res.json(user)
+                
+        } catch (error) {
+            console.log("Error captured in getUser controller :", error)
+            res.status(500).json({ message: error.message });
+        } 
+    }
+
+
     
     /**
      * GETUSERBYNAME
@@ -236,19 +267,18 @@ class UserController {
      * @return status(500) something bad went wrong
      */
     static async getUserByName(req, res) {
-        const { name } = req.params;
-    
+        const { userName } = req.params;
+        console.log(req.params)
         try {
             // Look for all users with the given name
             const users = await User.findAll({
                 where:{
                     name:{
-                        [Op.like]: `%${name}%`
-                    }, 
-                    isAdmin: false
+                        [Op.like]: `%${userName}%`
+                    },
                 }
             })
-        
+
             if (users){
                 res.json(users)
             } else {

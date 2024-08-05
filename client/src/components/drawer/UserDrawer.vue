@@ -25,6 +25,7 @@
             dense
             bordered
             class="row justify-center items-center"
+            @click="openAddForm"
             >
                 <!-- font-size="40px"  -->
                 <div class="text-h6 text-white">Add a user</div>
@@ -55,11 +56,15 @@
               }"
               
             style="height: 550px; width: 90%; margin: auto;">
-                <div v-for="n in 15" :key="n" class="q-py-xs">
-                    <UserCard/>
+                <div v-for="(user, index) in store.userList" :key="index" class="q-py-xs">
+                    <UserCard :userData="user" :index="index" />
                 </div>
             </q-scroll-area>
         </div>
+
+        <FormDialog title="Register a new user" @close="closeAddForm" :open="addForm">
+            <AddUserForm @success="closeAddForm"/>
+        </FormDialog>
     </div>
 </template>
 
@@ -69,12 +74,23 @@ defineOptions({
     name: "UserDrawer"
 })
 
+import { ref } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
 import SearchComponent from '../pieces/SearchComponent.vue';
-import UserCard from '../pieces/UserCard.vue';
+import UserCard from '../user/UserCard.vue';
+import FormDialog from '../dialogs/FormDialog.vue';
+import AddUserForm from '../userForm/AddUserForm.vue';
 
 const store = useUserStore()
+const addForm = ref(false)
 
+const openAddForm = () => {
+    addForm.value = true
+}
+
+const closeAddForm = () => {
+    addForm.value = false
+}
 
 </script>
 

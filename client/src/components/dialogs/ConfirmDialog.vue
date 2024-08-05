@@ -8,7 +8,7 @@
                 <q-card-section class="row items-center">
                     <q-avatar 
                     icon="logout" 
-                    color="grey" 
+                    color="cyan-9" 
                     text-color="white" 
                     size="3em"
                     />
@@ -30,7 +30,7 @@
                     flat
                     rounded
                     label="Confirm" 
-                    color="cyan"/>
+                    color="cyan-9"/>
                 </q-card-actions>
             </q-card>
         </q-dialog>

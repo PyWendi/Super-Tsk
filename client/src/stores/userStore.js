@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { register, login, getUser, getUsersByName, getAllUser, getCurrentUser } from "src/requests/userRequest";
+import { register, login, getUser, getUsersByName, getAllUser, getCurrentUser, updateUser } from "src/requests/userRequest";
 import { reactive, ref } from "vue";
 import { tokenManagement } from "./tokenManagement";
 
@@ -39,31 +39,36 @@ export const useUserStore = defineStore("user", () => {
     }
 
     const registerUser = async (body) => {
-        const response = await register(body)
-        if (response.res) {
-            userList.value = [response.data, ...userList.value]
+        try {
+            const response = await register(body)
+            console.log('Inside register ', response)
+            if (response.res) {
+                userList.value = [response.data, ...userList.value]
+                return response
+            } 
             return response
-        } 
-        return response
+            
+        } catch (error) {
+            console.log(error)
+            return {res:false, message: "Nothing good come"}
+        }
     }
 
     const getAllUserAction = async () => {
         const response = await getAllUser()
-        console.log(response)
         userList.value = response.data.rows
+        console.log(userList)
         return response
     }
 
     const getCurrentUserAction = async (id) => {
         const response = await getCurrentUser(id)
         let data = response.data
-        console.log(data)
         userData.id = data.id
         userData.name = data.name
         userData.lastname = data.lastname
         userData.email = data.email
         userData.isAdmin = data.isAdmin
-        console.log("get user data" ,userData.value)
         return response
     }
 
@@ -74,8 +79,17 @@ export const useUserStore = defineStore("user", () => {
         return response
     }
 
+    const updateUserAction = async (id, body, index) => {
+        const response = await updateUser(id, body)
+        userList.value[index].name = body.name
+        userList.value[index].lastname = body.lastname
+        userList.value[index].isAdmin = body.isAdmin
+        return response
+    }
+
     const getUserByNameAction = async (name) => {
         const response = await getUsersByName(name)
+        userList.value = [...response.data]
         return response
     }
 
@@ -88,6 +102,7 @@ export const useUserStore = defineStore("user", () => {
         userData, userDetail, userList,
 
         //Function
-        logUser, registerUser, getAllUserAction, getCurrentUserAction, getUserAction, getUserByNameAction, logoutUser
+        logUser, registerUser, getAllUserAction, getCurrentUserAction, 
+        getUserAction, updateUserAction, getUserByNameAction, logoutUser
     }
 })
