@@ -52,7 +52,7 @@
                         <q-item clickable @click="openUpdateModal">
                             <q-list-section>Update</q-list-section>
                         </q-item>
-                        <q-item clickable v-if="!userData.isAdmin">
+                        <q-item clickable v-if="!userData.isAdmin" @click="getTasks">
                             <q-list-section>Tasks</q-list-section>
                         </q-item>
                     </q-list>
@@ -81,11 +81,14 @@ defineOptions({
 import { ref } from 'vue';
 import FormDialog from '../dialogs/FormDialog.vue';
 import UpdateForm from '../userForm/UpdateForm.vue';
+import { useTaskStore } from 'src/stores/taskStore';
 
 const props = defineProps({
     userData: Object,
     index: Number
 })
+
+const store = useTaskStore()
 
 const openUpdate = ref(false)
 
@@ -96,6 +99,10 @@ const openUpdateModal = () => {
 const closeUpdateModal = () => {
     openUpdate.value = false
 }
+
+const getTasks = async () => {
+    const response = await store.getUsertaskByAdminACtion(props.userData.id)
+} 
 
 
 </script>

@@ -26,18 +26,27 @@
             </div>
             
             <!-- Task name -->    
-            <div class="q-pt-xs text-overline">
+            <div class="q-pt-xs useComfortaa">
                 {{name}}
             </div>
 
             <!-- Task description -->
-            <p class="text-grey wrap-text wrap">
+            <p class="text-grey-7 wrap-text wrap q-pb-none q-mb-sm">
                 {{ description }}
             </p>
 
+            <!-- updated_at -->
+            <!-- <div>
+                <div class="text-grey-8 text-caption text-right">
+                    Updated {{updatedAt}} ago
+                </div> 
+            </div> -->
+
             <!-- Created_at -->
             <div>
-
+                <div class="text-grey text-caption text-right">
+                    Affected {{formatTimeDifference()}}
+                </div> 
             </div>
         </div>
 
@@ -56,17 +65,21 @@ defineOptions({
 })
 
 import { ref, onBeforeMount } from 'vue';
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { enUS } from "date-fns/locale";
 
 const props = defineProps({
     status: String,
     name: String,
     description: String,
     id: Number,
-    index: Number
+    index: Number,
+    date: String
 })
 
 const avatarColor = ref("grey")
 const updateModal = ref(false)
+const createdAt = ref("3 days")
 
 onBeforeMount(() => {
     setAvatarColor()
@@ -77,6 +90,12 @@ const setAvatarColor = () => {
     else if (props.status === "working") avatarColor.value = "green-8"
     else if (props.status === "completed") avatarColor.value = "blue-5"
 }   
+
+const formatTimeDifference = () => {
+    console.log(props.date)
+    const formattedDate = parseISO(props.date);
+    return formatDistanceToNow(formattedDate, { locale: enUS, addSuffix: true });
+};
 
 const openUpdateModal = () => updateModal.value = true
 
@@ -92,4 +111,5 @@ const openUpdateModal = () => updateModal.value = true
     overflow-wrap: break-word;
     text-overflow: ellipsis;
 }
+
 </style>

@@ -18,7 +18,7 @@ export const getUserTaskByAdmin = async (userId) => {
 
     try {
         const response = await api.get(`task/get/${userId}`)
-        console.log("Response from getUserTaskByAdmin request : ", response)
+        // console.log("Response from getUserTaskByAdmin request : ", response)
 
         // If a task has been found
         if (response.status === 200) {

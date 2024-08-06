@@ -66,8 +66,8 @@
             </div>
 
             <div class="q-pt-md full-width row justify-between items-baseline">
-
-                <q-scroll-area 
+                
+                <q-scroll-area
                 :thumb-style="{
                     right: '4px',
                     borderRadius: '5px',
@@ -83,15 +83,20 @@
                     opacity: 0.2
                 }"
                 
-                style="height: 65vh; "
+                style="height: 60vh; "
                 class="q-pt-md  column justify-between custom-card-width"
                 >
-                    <TaskCard 
-                    name="Firt Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
-                    id="0"
-                    index="0"
-                    status="pending" 
+                    <NoCardFound v-if="store.taskList.partition.pending.length === 0"
+                    status="pending" />
+
+                    <TaskCard v-else
+                    v-for="(task, index) in store.taskList.partition.pending" :key="index"
+                    :name="task.name"
+                    :description="task.description"
+                    :id="task.id"
+                    :index="index"
+                    :status="task.status"
+                    :date="task.created_at" 
                     class="full-width q-mb-md" />
                 </q-scroll-area>
 
@@ -112,55 +117,20 @@
                     opacity: 0.2
                 }"
                 
-                style="height: 65vh; "
+                style="height: 60vh; "
                 class="q-pt-md  column justify-between custom-card-width"
                 >
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur "
-                    id="0"
-                    index="0"
-                    status="working" 
-                    class="full-width q-mb-md" />
+                    <NoCardFound v-if="store.taskList.partition.working.length === 0"
+                    status="working on" />
 
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
-                    id="0"
-                    index="0"
-                    status="working" 
-                    class="full-width q-mb-md" />
-
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
-                    id="0"
-                    index="0"
-                    status="working" 
-                    class="full-width q-mb-md" />
-
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur "
-                    id="0"
-                    index="0"
-                    status="working" 
-                    class="full-width q-mb-md" />
-
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur "
-                    id="0"
-                    index="0"
-                    status="working" 
-                    class="full-width q-mb-md" />
-
-                    <TaskCard 
-                    name="Second Task"
-                    description="Lorem ipsum dolor sit amet consectetur "
-                    id="0"
-                    index="0"
-                    status="working" 
+                    <TaskCard v-else
+                    v-for="(task, index) in store.taskList.partition.working" :key="index"
+                    :name="task.name"
+                    :description="task.description"
+                    :id="task.id"
+                    :index="index"
+                    :status="task.status"
+                    :date="task.created_at" 
                     class="full-width q-mb-md" />
                 </q-scroll-area>
 
@@ -181,23 +151,20 @@
                     opacity: 0.2
                 }"
                 
-                style="height: 65vh; "
+                style="height: 60vh; "
                 class="q-pt-md  column justify-between custom-card-width"
                 >
-                    <TaskCard 
-                    name="Third Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
-                    id="0"
-                    index="0"
-                    status="completed" 
-                    class="full-width q-mb-md" />
+                    <NoCardFound v-if="store.taskList.partition.completed.length === 0"
+                    status="completed" />
 
-                    <TaskCard 
-                    name="Third Task"
-                    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. A id voluptate hic maxime, vero laborum voluptates accusantium eligendi quis suscipit."
-                    id="0"
-                    index="0"
-                    status="completed" 
+                    <TaskCard v-else
+                    v-for="(task, index) in store.taskList.partition.completed" :key="index"
+                    :name="task.name"
+                    :description="task.description"
+                    :id="task.id"
+                    :index="index"
+                    :status="task.status"
+                    :date="task.updated_at" 
                     class="full-width q-mb-md" />
                 </q-scroll-area>
 
@@ -210,11 +177,14 @@
 
 <script setup>
 import TaskCard from './TaskCard.vue';
+import { useTaskStore } from 'src/stores/taskStore';
+import NoCardFound from './NoCardFound.vue';
 
 defineOptions({
     name: "TaskList"
 })
 
+const store = useTaskStore()
 
 
 </script>

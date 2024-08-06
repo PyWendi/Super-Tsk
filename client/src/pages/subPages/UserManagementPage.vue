@@ -6,15 +6,15 @@
         <div class="row bg-white justify-around items-center q-px-xl q-py-xs">
             <!-- Count of all user -->
             <div class="text-h6 text-grey-7">
-                <DonutChart status="pending" value="20"/>
+                <DonutChart status="pending" :value="task.taskList.information[0]"/>
             </div>
 
             <div class="text-h6 text-grey-7">
-                <DonutChart status="working" value="50"/>
+                <DonutChart status="working" :value="task.taskList.information[1]"/>
             </div>
 
             <div class="text-h6 text-grey-7">
-                <DonutChart status="completed" value="30"/>
+                <DonutChart status="completed" :value="task.taskList.information[2]"/>
             </div>
 
         </div>
@@ -38,11 +38,13 @@ defineOptions({
 
 import { ref, onBeforeMount } from 'vue';
 import { useUserStore } from 'src/stores/userStore';
+import { useTaskStore } from 'src/stores/taskStore';
 import DonutChart from 'src/components/pieces/DonutChart.vue';
 import TaskList from 'src/components/task/TaskList.vue';
 
 
 const store = useUserStore()
+const task = useTaskStore()
 
 onBeforeMount(() => {
     store.getAllUserAction()
