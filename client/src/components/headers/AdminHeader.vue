@@ -21,6 +21,7 @@
         <ConfirmDialog 
         @callback="confirmLogout" 
         text="Are you sure you want to logout ?" 
+        icon="logout"
         :open="openLogout"/>
     </div>
 </template>

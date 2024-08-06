@@ -7,7 +7,7 @@
             <q-card>
                 <q-card-section class="row items-center">
                     <q-avatar 
-                    icon="logout" 
+                    :icon="icon" 
                     color="cyan-9" 
                     text-color="white" 
                     size="3em"
@@ -38,7 +38,6 @@
 </template>
   
 <script setup>
-import { ref } from 'vue'
 
 defineOptions({
     name: "ConfirmDialog"
@@ -46,7 +45,8 @@ defineOptions({
 const emit = defineEmits(["callback"])
 const props = defineProps({
     text: String,
-    open: Boolean
+    open: Boolean,
+    icon: String
 })
 
 

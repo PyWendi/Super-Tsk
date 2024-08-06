@@ -25,7 +25,12 @@ class TaskController {
     static async getUserTasks(req, res) {
         try {
             // Find all taks with the given owner id
-            let tasks = await Task.findAll({where: {owner: req.userId}})
+            let tasks = await Task.findAll({
+                where: {owner: req.userId},
+                order: [
+                    ['created_at', 'DESC']
+                ]
+            })
 
             if(tasks) return res.json({tasks: tasks})
             
@@ -52,7 +57,12 @@ class TaskController {
         try {
             const { userId } = req.params
 
-            let tasks = await Task.findAll({where: {owner: userId}})
+            let tasks = await Task.findAll({
+                where: {owner: userId},
+                order:[
+                    ['created_at', 'DESC']
+                ]
+            })
 
             if(tasks) return res.json({tasks: tasks})
 
@@ -80,11 +90,10 @@ class TaskController {
             const { 
                 name,
                 description,
-                status,
                 owner
              } = req.body
 
-             let newTask = await Task.create({name, description, status, owner})
+             let newTask = await Task.create({name, description, status: "pending", owner})
 
              return res.status(201).json({task: newTask})
 
@@ -184,8 +193,8 @@ class TaskController {
             let task = await Task.findByPk(taskId)
 
             await task.destroy()
-
-            return res.status(204)
+            
+            return res.status(204).json({data: "nodata"})
         } catch (error) {
             console.log("An error has been captured inside deleteTask controller : ", error)
             return res.status(500).json({

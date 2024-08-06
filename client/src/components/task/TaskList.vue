@@ -1,21 +1,21 @@
 <template>
     <div>
-    
-        <div class="q-pa-lg full-width row justify-between ">
-            
-            <!-- Pending section -->
-            <div class="column justify-center items-center custom-width">
-                <!-- Add button -->
+        <div class="q-px-lg q-pt-sm full-width row justify-between ">
+            <!-- Add button -->
+            <div 
+            v-for="n in 3" :key="n"
+            class="column justify-center items-center custom-width">
                 <q-btn
-                style="width: 100%;"
+                v-if="user.userDetail.id !== 0 "
+                style="width: 75%;"
                 color="cyan-9 q-py-sm"
                 dense
+                rounded
                 unelevated
                 bordered
                 class="row justify-between items-center"
+                @click="openModal"
                 >
-                    <!-- font-size="40px"  -->
-                    <div class="text-hoverline text-white">Add task</div>
                     <q-icon 
                     size="20px" 
                     color="white" 
@@ -24,46 +24,6 @@
                 </q-btn>
             </div>
     
-            <!-- Working On section -->
-            <div class="column justify-center items-center custom-width">
-                <q-btn
-                style="width: 100%;"
-                color="cyan-9 q-py-sm"
-                dense
-                unelevated
-                bordered
-                class="row justify-between items-center"
-                >
-                    <!-- font-size="40px"  -->
-                    <div class="text-hoverline text-white">Add task</div>
-                    <q-icon 
-                    size="20px" 
-                    color="white" 
-                    text-color="white" 
-                    name="add" />
-                </q-btn>
-            </div>
-    
-            <!-- Completed section -->
-            <div class="column justify-center items-center custom-width">
-                <q-btn
-                style="width: 100%;"
-                color="cyan-9 q-py-sm"
-                dense
-                unelevated
-                bordered
-                class="row justify-between items-center"
-                >
-                    <!-- font-size="40px"  -->
-                    <div class="text-hoverline text-white">Add task</div>
-                    <q-icon 
-                    size="20px" 
-                    color="white" 
-                    text-color="white" 
-                    name="add" />
-                </q-btn>
-    
-            </div>
 
             <div class="q-pt-md full-width row justify-between items-baseline">
                 
@@ -84,7 +44,7 @@
                 }"
                 
                 style="height: 60vh; "
-                class="q-pt-md  column justify-between custom-card-width"
+                class=" column justify-between custom-card-width"
                 >
                     <NoCardFound v-if="store.taskList.partition.pending.length === 0"
                     status="pending" />
@@ -118,7 +78,7 @@
                 }"
                 
                 style="height: 60vh; "
-                class="q-pt-md  column justify-between custom-card-width"
+                class=" column justify-between custom-card-width"
                 >
                     <NoCardFound v-if="store.taskList.partition.working.length === 0"
                     status="working on" />
@@ -152,7 +112,7 @@
                 }"
                 
                 style="height: 60vh; "
-                class="q-pt-md  column justify-between custom-card-width"
+                class=" column justify-between custom-card-width"
                 >
                     <NoCardFound v-if="store.taskList.partition.completed.length === 0"
                     status="completed" />
@@ -171,20 +131,43 @@
 
             </div>
         </div>
+
+        <!-- Add form -->
+        <FormDialog 
+        :open="addModal" 
+        title="Add a task to the user" 
+        @close="handleClose">
+            <AddTaskForm @success="handleClose"/>
+        </FormDialog>
     </div>
 </template>
 
 
 <script setup>
-import TaskCard from './TaskCard.vue';
+import { ref } from 'vue';
 import { useTaskStore } from 'src/stores/taskStore';
+import { useUserStore } from 'src/stores/userStore';
 import NoCardFound from './NoCardFound.vue';
+import TaskCard from './TaskCard.vue';
+import FormDialog from '../dialogs/FormDialog.vue';
+import AddTaskForm from '../taskForm/AddTaskForm.vue';
 
 defineOptions({
     name: "TaskList"
 })
 
 const store = useTaskStore()
+const user = useUserStore()
+
+const addModal = ref(false)
+
+const openModal = () => {
+    addModal.value = true
+}
+
+const handleClose = () => {
+    addModal.value = false
+}
 
 
 </script>

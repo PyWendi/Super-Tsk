@@ -82,6 +82,7 @@ import { ref } from 'vue';
 import FormDialog from '../dialogs/FormDialog.vue';
 import UpdateForm from '../userForm/UpdateForm.vue';
 import { useTaskStore } from 'src/stores/taskStore';
+import { useUserStore } from 'src/stores/userStore';
 
 const props = defineProps({
     userData: Object,
@@ -89,6 +90,7 @@ const props = defineProps({
 })
 
 const store = useTaskStore()
+const user = useUserStore()
 
 const openUpdate = ref(false)
 
@@ -102,6 +104,7 @@ const closeUpdateModal = () => {
 
 const getTasks = async () => {
     const response = await store.getUsertaskByAdminACtion(props.userData.id)
+    user.setUserDetail(props.userData)
 } 
 
 

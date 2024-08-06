@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import TaskList from "src/components/task/TaskList.vue";
 import { createTask, deleteTask, getUserTask, getUserTaskByAdmin, updateTask, updateTaskStatus } from "src/requests/taskRequest";
 import { reactive, ref } from "vue";
 
@@ -88,38 +89,43 @@ export const useTaskStore = defineStore("task", () => {
 
     const createTaskAction = async (body) => {
         const response = await createTask(body)
-        taskList.value = [response.data, ...taskList]
+        taskData.value = [response.data, ...taskData.value]
+        affectTask(taskData.value)
         return response
     }
 
-    const updateTaskAction = async (index, body) => {
-        const response = updateTask(body, body.taskId)
+    const updateTaskAction = async (body) => {
+        console.log(body)
+        const response = await updateTask(body, body.id)
         if(response.res) {
-            const i = taskData.value.findIndex(obj => obj.id === body.taskId)
+            const i = taskData.value.findIndex(obj => obj.id === body.id)
             taskData.value[i].name = body.name
             taskData.value[i].description = body.description
             taskData.value[i].status = body.status
-            
             affectTask(taskData.value)
         }
 
         return response
     }
 
-    const updateTaskStatusAction = async (body, index) => {
+    const updateTaskStatusAction = async (body) => {
         const response = await updateTaskStatus(body)
         if(response.res) {
-            taskList.value[index].status = body.status
+            const i = taskData.value.findIndex(obj => obj.id === body.id)
+            taskData.value[i].status = body.status
+            affectTask(taskData.value)
         } 
 
         return response
     }
 
-    const deleteTaskAction = async (taskId, index) => {
-        const response = deleteTask(taskId)
+    const deleteTaskAction = async (taskId) => {
+        const response = await deleteTask(taskId)
         if(response.res) {
-            let newTasks = taskList.value.filter((task, i) => i != index)
-            taskList.value = [...newTasks]
+            const i = taskData.value.findIndex(obj => obj.id === taskId)
+            let newTasks = taskData.value.filter((task, index) => index != i)
+            taskData.value = [...newTasks]
+            affectTask(taskData.value)
         }
 
         return response

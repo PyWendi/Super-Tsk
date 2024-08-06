@@ -81,9 +81,10 @@ export const createTask = async (body) => {
         data: null,
         res: false
     }
+    
 
     try {
-        const response = await api.post('task/create')
+        const response = await api.post('task/create', body)
         console.log("Response from createTask request : ", response)
 
         // if the task has been successfully created
@@ -159,7 +160,7 @@ export const updateTaskStatus = async (body) => {
     }
 
     try {
-        const response = await api.put('task/update/status')
+        const response = await api.put('task/update/status', body)
 
         // if the status has been updated successfully
         if (response.status === 200) {
@@ -196,7 +197,7 @@ export const deleteTask = async (taskId) => {
 
     try {
         const response = await api.delete(`task/delete/${taskId}`)
-
+        console.log(response)
         if (response.status === 204) {
             res.res = true
             return res
@@ -206,7 +207,7 @@ export const deleteTask = async (taskId) => {
             res.message = response.data.message
             return res
         }
-
+    
     } catch (error) {
         console.log("Error captured inside updateTaskStatus request : ", error)
         res.message = "Please verify your network connectivity and try again"

@@ -33,6 +33,16 @@ export const useUserStore = defineStore("user", () => {
     /**
      * ALL FUNCTIONS 
      */
+
+    const setUserDetail = (data) => {
+        userDetail.id = data.id
+        userDetail.name = data.name
+        userDetail.lastname = data.lastname
+        userDetail.email = data.email
+        userDetail.isAdmin = data.isAdmin
+    }
+
+
     const logUser = async (body) => {
         const response = await login(body)
         return response
@@ -102,6 +112,7 @@ export const useUserStore = defineStore("user", () => {
         userData, userDetail, userList,
 
         //Function
+        setUserDetail,
         logUser, registerUser, getAllUserAction, getCurrentUserAction, 
         getUserAction, updateUserAction, getUserByNameAction, logoutUser
     }

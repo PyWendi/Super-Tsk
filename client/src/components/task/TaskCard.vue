@@ -16,7 +16,7 @@
                                 <q-item clickable @click="openUpdateModal">
                                     <q-list-section>Update</q-list-section>
                                 </q-item>
-                                <q-item clickable class="text-red-5">
+                                <q-item clickable @click="openDeleteModal" class="text-red-5">
                                     <q-list-section>Delete</q-list-section>
                                 </q-item>
                             </q-list>
@@ -50,11 +50,24 @@
             </div>
         </div>
 
-        
+        <!-- Udpate form -->
+        <FormDialog
+        :open="updateModal"
+        title="Update the task"
+        @close="closeUpdateModal">
+            <UpdateTaskForm 
+            :data="props"
+            @success="closeUpdateModal"
+            />
+        </FormDialog>
 
+        <DeleteDialog
+        :open="deleteModal"
+        icon="delete"
+        @callback="closeDeleteModal"
+        :data="props"
+        />
 
-
-        <!-- last-Updated -->
     </div>
 </template>
 
@@ -67,6 +80,9 @@ defineOptions({
 import { ref, onBeforeMount } from 'vue';
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { enUS } from "date-fns/locale";
+import FormDialog from '../dialogs/FormDialog.vue';
+import UpdateTaskForm from '../taskForm/UpdateTaskForm.vue';
+import DeleteDialog from '../dialogs/DeleteDialog.vue';
 
 const props = defineProps({
     status: String,
@@ -79,7 +95,7 @@ const props = defineProps({
 
 const avatarColor = ref("grey")
 const updateModal = ref(false)
-const createdAt = ref("3 days")
+const deleteModal = ref(false)
 
 onBeforeMount(() => {
     setAvatarColor()
@@ -87,17 +103,20 @@ onBeforeMount(() => {
 
 const setAvatarColor = () => {
     if (props.status === "pending") avatarColor.value = "grey"
-    else if (props.status === "working") avatarColor.value = "green-8"
+    else if (props.status === "working on") avatarColor.value = "green-8"
     else if (props.status === "completed") avatarColor.value = "blue-5"
 }   
 
 const formatTimeDifference = () => {
-    console.log(props.date)
     const formattedDate = parseISO(props.date);
     return formatDistanceToNow(formattedDate, { locale: enUS, addSuffix: true });
 };
 
 const openUpdateModal = () => updateModal.value = true
+const closeUpdateModal = () => updateModal.value = false
+
+const openDeleteModal = () => deleteModal.value = true
+const closeDeleteModal = () => deleteModal.value = false
 
 </script>
 
