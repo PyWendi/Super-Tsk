@@ -82,7 +82,6 @@ const confirmDelete = async () => {
         } else {
             requestWarning(response.message)
         }
-        console.log("dioasjhdoiasjdpiASJDOPASK")
         isLoading.value = false
 
     } catch (error) {
